@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Suspense } from "react";
 import { SignUp } from "@clerk/nextjs";
 
@@ -5,6 +6,14 @@ export default function SignUpPage() {
   return (
     <main className="auth-page">
       <section className="auth-shell auth-shell-signup">
+        <Image
+          src="/branding/urban-stories-logo.svg"
+          alt="Urban Stories — Stories Beyond Boundaries"
+          width={300}
+          height={90}
+          priority
+          className="auth-brand"
+        />
         <Suspense fallback={<div className="text-sm text-slate-500">Loading secure account page…</div>}>
           <SignUp
             routing="path"
