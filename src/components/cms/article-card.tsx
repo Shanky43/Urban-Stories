@@ -1,0 +1,4 @@
+import Link from "next/link";
+import {imageUrl} from "@/lib/sanity/image";
+import type {Article} from "@/lib/sanity/types";
+export function ArticleCard({article}:{article:Article}){return <article className="cms-article-card"><Link href={"/article/"+article.slug} className="cms-card-image">{article.featuredImage&&<img src={imageUrl(article.featuredImage,900)} alt={article.featuredImage.alt||article.title}/>}</Link><div className="cms-card-body">{article.category&&<Link className="cms-category-label" href={"/category/"+article.category.slug}>{article.category.name}</Link>}<h3><Link href={"/article/"+article.slug}>{article.title}</Link></h3><p>{article.excerpt}</p><div className="cms-card-meta">{article.author&&<Link href={"/author/"+article.author.slug}>{article.author.name}</Link>}{article.readingTime&&<span>{article.readingTime} min read</span>}</div></div></article>}

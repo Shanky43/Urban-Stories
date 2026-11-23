@@ -1,0 +1,8 @@
+export type SanityImage={asset?:{_id?:string;url?:string;metadata?:{dimensions?:{width:number;height:number};lqip?:string}};alt?:string;caption?:string};
+export type Category={_id:string;name:string;slug:string;description?:string;image?:SanityImage;featured?:boolean};
+export type Author={name:string;slug:string;designation?:string;biography?:string;profileImage?:SanityImage;socialLinks?:{label:string;url:string}[]};
+export type Article={_id:string;title:string;slug:string;excerpt:string;category?:Category;author?:Author;publishedAt?:string;readingTime?:number;featured?:boolean;trending?:boolean;editorsPick?:boolean;tags?:string[];featuredImage?:SanityImage;body?:any[];updatedAt?:string;categories?:Category[];related?:Article[];seo?:{title?:string;description?:string;socialImage?:SanityImage;noIndex?:boolean}};
+export type SiteSettings={siteName?:string;tagline?:string;description?:string;defaultSeoTitle?:string;defaultSeoDescription?:string;contactEmail?:string;copyrightText?:string;logo?:SanityImage;favicon?:{asset?:{url?:string}};uiLabels?:Record<string,string>;defaultSocialImage?:SanityImage;socialLinks?:{label:string;url:string}[]};
+export type NavigationData={title?:string;items?:any[]};
+export type FooterData={description?:string;groups?:any[];socialLinks?:{label:string;url:string}[];newsletter?:any;copyrightText?:string};
+export type HomeData={hero?:{eyebrow?:string;heading?:string;description?:string;backgroundImage?:SanityImage;featuredArticle?:Article;searchPlaceholder?:string;searchButtonLabel?:string};sections?:any[]};
