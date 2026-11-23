@@ -67,7 +67,7 @@ export function renderUrbanStoriesEmail(key: EmailTemplateKey, data: EmailData =
     ? '<img src="'+escapeHtml(process.env.URBAN_STORIES_EMAIL_LOGO_URL)+'" width="190" alt="Urban Stories" border="0" style="display:block;width:190px;height:auto;margin:0 auto;">'
     : '<span style="font-family:Arial,Helvetica,sans-serif;font-size:26px;line-height:32px;font-weight:800;color:#14243b;">Urban<span style="color:#397cf0;">Stories</span></span>';
   const unsubscribeUrl = String(data.unsubscribeUrl || "");
-  const unsubscribe = key === "newsletterPublication" && unsubscribeUrl ? '<tr><td align="center" style="padding-top:10px;"><a href="' + escapeHtml(unsubscribeUrl) + '" style="color:#667085;">Unsubscribe</a></td></tr>' : "";
+  const unsubscribe = (key === "newsletterPublication" || key === "newsletterConfirmation") && unsubscribeUrl ? '<tr><td align="center" style="padding-top:10px;"><a href="' + escapeHtml(unsubscribeUrl) + '" style="color:#667085;">Unsubscribe</a></td></tr>' : "";
   const privacy = process.env.URBAN_STORIES_PRIVACY_URL || siteUrl()+"/pages/privacy-policy";
   const terms = process.env.URBAN_STORIES_TERMS_URL || siteUrl()+"/pages/terms-of-service";
   const support = process.env.URBAN_STORIES_SUPPORT_EMAIL || process.env.URBAN_STORIES_ADMIN_EMAIL || "";

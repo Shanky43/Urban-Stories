@@ -2,7 +2,9 @@ import Image from "next/image";
 import { Suspense } from "react";
 import { SignIn } from "@clerk/nextjs";
 
-export default function SignInPage() {
+export default async function SignInPage({searchParams}:{searchParams:Promise<{redirect_url?:string}>}) {
+  const params=await searchParams;
+  const redirectUrl=params.redirect_url?.startsWith("/")&&!params.redirect_url.startsWith("//")?params.redirect_url:"/";
   return (
     <main className="auth-page">
       <section className="auth-shell">
@@ -19,7 +21,8 @@ export default function SignInPage() {
             routing="path"
             path="/sign-in"
             signUpUrl="/sign-up"
-            fallbackRedirectUrl="/"
+            forceRedirectUrl={redirectUrl}
+            fallbackRedirectUrl={redirectUrl}
             appearance={{
               variables: { colorPrimary: "#397cf0", colorBackground: "#ffffff", borderRadius: "10px" },
               elements: {

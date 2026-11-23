@@ -1,0 +1,5 @@
+import {NextRequest,NextResponse} from "next/server";
+import {createHash} from "node:crypto";
+import {getWriteClient} from "@/lib/sanity/write-client";
+const hash=(value:string)=>createHash("sha256").update(value).digest("hex");
+export async function GET(request:NextRequest){const token=request.nextUrl.searchParams.get("token");if(!token||!/^[a-f0-9]{64}$/.test(token))return NextResponse.json({error:"Invalid unsubscribe link."},{status:400});try{const client=getWriteClient();const item=await client.fetch<{_id:string}|null>('*[_type=="newsletterSubscriber"&&unsubscribeTokenHash==$token][0]{_id}',{token:hash(token)} as never);if(!item)return NextResponse.json({error:"This unsubscribe link is invalid or has already been used."},{status:404});await client.patch(item._id).set({status:"unsubscribed",unsubscribedAt:new Date().toISOString()}).unset(["unsubscribeTokenHash"]).commit();return NextResponse.redirect(new URL("/?newsletter=unsubscribed",request.url));}catch(error){console.error("Newsletter unsubscribe failed",error);return NextResponse.json({error:"Unable to unsubscribe right now."},{status:503});}}
