@@ -238,3 +238,23 @@
   .auth-clerk-cardbox{max-width:100%}
   .blog-nav .brand-logo img{width:138px;max-height:38px}
 }
+
+/* Authentication backdrop: clearly visible Urban Stories navy-to-blue gradient */
+.auth-page {
+  background:
+    radial-gradient(circle at 82% 18%, rgba(57, 124, 240, 0.78) 0%, rgba(57, 124, 240, 0) 46%),
+    radial-gradient(ellipse at 12% 88%, rgba(57, 124, 240, 0.42) 0%, rgba(57, 124, 240, 0) 42%),
+    linear-gradient(135deg, #14243b 0%, #1d3b65 40%, #397cf0 100%) !important;
+  background-color: #14243b !important;
+  background-attachment: fixed;
+}
+
+@media (max-width: 700px) {
+  .auth-page {
+    background:
+      radial-gradient(circle at 88% 14%, rgba(57, 124, 240, 0.82) 0%, rgba(57, 124, 240, 0) 54%),
+      radial-gradient(ellipse at 8% 90%, rgba(57, 124, 240, 0.48) 0%, rgba(57, 124, 240, 0) 48%),
+      linear-gradient(155deg, #14243b 0%, #1d3b65 43%, #397cf0 100%) !important;
+    background-attachment: scroll;
+  }
+}
