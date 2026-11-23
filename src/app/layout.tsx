@@ -13,4 +13,4 @@ export async function generateMetadata():Promise<Metadata>{
  const image=settings?.defaultSocialImage?.asset?.url;
  return {title:{default:title,template:"%s | "+(settings?.siteName||"Urban Stories")},description,applicationName:settings?.siteName,icons:settings?.favicon?.asset?.url?{icon:settings.favicon.asset.url}:undefined,openGraph:{type:"website",siteName:settings?.siteName,title,description,images:image?[image]:undefined},twitter:{card:"summary_large_image",title,description,images:image?[image]:undefined}};
 }
-export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="en"><body><AuthProvider publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}>{children}</AuthProvider></body></html>}
+export default function RootLayout({children}:{children:React.ReactNode}){const publishableKey=process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;return <html lang="en"><body>{publishableKey?<AuthProvider publishableKey={publishableKey}>{children}</AuthProvider>:children}</body></html>}
