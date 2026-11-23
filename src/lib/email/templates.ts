@@ -63,8 +63,9 @@ export function renderUrbanStoriesEmail(key: EmailTemplateKey, data: EmailData =
   const paragraphHtml = paragraphs.map(p => '<tr><td style="padding:0 40px 14px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:24px;color:#344054;">'+escapeHtml(p)+'</td></tr>').join("");
   const button = cta ? '<tr><td align="center" style="padding:16px 40px 30px;"><table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr><td bgcolor="#397cf0" style="border-radius:7px;"><a href="'+escapeHtml(url)+'" style="display:inline-block;padding:14px 28px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:20px;font-weight:bold;color:#ffffff;text-decoration:none;">'+escapeHtml(cta)+'</a></td></tr></table></td></tr>' : "";
   const notice = key === "passwordReset" || key === "emailVerification" ? '<tr><td bgcolor="#f5f7fa" style="padding:16px 40px;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:21px;color:#475467;">For your security, never share this link. If you did not request this action, you can ignore this email.</td></tr>' : "";
-  const logo = process.env.URBAN_STORIES_EMAIL_LOGO_URL
-    ? '<img src="'+escapeHtml(process.env.URBAN_STORIES_EMAIL_LOGO_URL)+'" width="190" alt="Urban Stories" border="0" style="display:block;width:190px;height:auto;margin:0 auto;">'
+  const logoUrl = process.env.URBAN_STORIES_EMAIL_LOGO_URL || (process.env.NEXT_PUBLIC_SITE_URL ? process.env.NEXT_PUBLIC_SITE_URL.replace(/\/$/, "") + "/branding/urban-stories-logo.svg" : "");
+  const logo = logoUrl
+    ? '<img src="'+escapeHtml(logoUrl)+'" width="190" alt="Urban Stories" border="0" style="display:block;width:190px;height:auto;margin:0 auto;">'
     : '<span style="font-family:Arial,Helvetica,sans-serif;font-size:26px;line-height:32px;font-weight:800;color:#14243b;">Urban<span style="color:#397cf0;">Stories</span></span>';
   const unsubscribeUrl = String(data.unsubscribeUrl || "");
   const unsubscribe = (key === "newsletterPublication" || key === "newsletterConfirmation") && unsubscribeUrl ? '<tr><td align="center" style="padding-top:10px;"><a href="' + escapeHtml(unsubscribeUrl) + '" style="color:#667085;">Unsubscribe</a></td></tr>' : "";
