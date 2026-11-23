@@ -203,3 +203,38 @@
 .cl-cardBox{min-height:0!important;height:auto!important}
 .cl-card{margin-bottom:0!important}
 @media(max-width:480px){.auth-page{padding:20px 14px}.auth-shell{gap:14px}.auth-brand{width:min(260px,76vw)}}
+
+/* Urban Stories authentication branding */
+.auth-page{
+  min-height:100svh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:40px 20px;
+  background:
+    radial-gradient(ellipse at 16% 18%, rgba(57,124,240,.22) 0%, rgba(57,124,240,0) 42%),
+    radial-gradient(ellipse at 88% 82%, rgba(57,124,240,.18) 0%, rgba(57,124,240,0) 40%),
+    linear-gradient(135deg,#14243b 0%,#192f50 52%,#14243b 100%);
+}
+.auth-shell{width:100%;display:flex;flex-direction:column;align-items:center;gap:18px}
+.auth-brand{display:block;width:min(300px,72vw);height:auto;max-height:100px;object-fit:contain;padding:10px 18px;background:#fff;border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.12)}
+.auth-clerk-root{width:100%;display:flex;justify-content:center}
+.auth-clerk-cardbox{width:100%;max-width:440px}
+.auth-clerk-card{background:#fff!important;border:1px solid rgba(20,36,59,.12)!important;box-shadow:0 18px 55px rgba(0,0,0,.22)!important}
+.auth-clerk-card button[data-localization-key="formButtonPrimary"],
+.auth-clerk-card .cl-formButtonPrimary{background:#397cf0!important;color:#fff!important}
+.auth-clerk-card button[data-localization-key="formButtonPrimary"]:hover,
+.auth-clerk-card .cl-formButtonPrimary:hover{background:#2868d8!important}
+.auth-clerk-card a{color:#397cf0}
+.auth-clerk-card [data-variant="headerTitle"]{color:#14243b}
+.blog-nav .brand-logo{display:flex;align-items:center}
+.blog-nav .brand-logo img{display:block;width:160px;max-width:42vw;height:auto;max-height:42px;object-fit:contain}
+.site-footer .footer-brand-logo{display:inline-flex;align-items:center;padding:6px 10px;background:#fff;border-radius:5px}
+.site-footer .footer-brand-logo img{display:block;width:170px;max-width:100%;height:auto;object-fit:contain}
+@media(max-width:650px){
+  .auth-page{padding:28px 16px}
+  .auth-shell{gap:14px}
+  .auth-brand{width:min(250px,70vw)}
+  .auth-clerk-cardbox{max-width:100%}
+  .blog-nav .brand-logo img{width:138px;max-height:38px}
+}

@@ -21,13 +21,14 @@ export default function SignInPage() {
             signUpUrl="/sign-up"
             fallbackRedirectUrl="/"
             appearance={{
+              variables: { colorPrimary: "#397cf0", colorBackground: "#ffffff", borderRadius: "10px" },
               elements: {
                 rootBox: "auth-clerk-root",
                 cardBox: "auth-clerk-cardbox",
                 card: "auth-clerk-card",
                 footer: "hidden",
                 headerTitle: "text-[#14243b]",
-                formButtonPrimary: "bg-[#397cf0] hover:bg-[#2868d8]",
+                formButtonPrimary: "bg-[#397cf0] hover:bg-[#2868d8] text-white",
               },
             }}
           />
