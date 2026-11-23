@@ -32,19 +32,23 @@ export async function POST(request: NextRequest) {
     const data = schema.parse(await request.json());
 
     const client = getWriteClient();
-    const [category, authorId] = await Promise.all([
+    const [category, existingAuthorId, approvedApplication] = await Promise.all([
       data.categoryId ? client.fetch('*[_type=="category" && _id==$id][0]._id', { id: data.categoryId }) : Promise.resolve(null),
       client.fetch('*[_type=="author" && clerkUserId==$id][0]._id', { id: access.userId }),
+      client.fetch('*[_type=="contributorApplication" && clerkUserId==$id && status=="approved"]|order(submittedAt desc)[0]{fullName,email,interests}', { id: access.userId }),
     ]);
     if (data.categoryId && !category) return NextResponse.json({ error: "Choose a valid category." }, { status: 400 });
-    if (!authorId) return NextResponse.json({ error: "Your author profile has not been created yet. Contact the editor." }, { status: 409 });
+    const profileName = access.profile ? [access.profile.firstName, access.profile.lastName].filter(Boolean).join(" ") : "";
+    const authorName = approvedApplication?.fullName || profileName || access.profile?.username || "Urban Stories Contributor";
+    const email = approvedApplication?.email || access.profile?.emailAddresses?.find((item) => item.verification?.status === "verified")?.emailAddress || access.profile?.emailAddresses?.[0]?.emailAddress;
+    const author = existingAuthorId ? { _id: existingAuthorId } : await client.createIfNotExists({ _id: `author-${access.userId}`, _type: "author", name: authorName, slug: { _type: "slug", current: authorName.toLowerCase().normalize("NFKD").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || `contributor-${access.userId.slice(-6)}` }, biography: approvedApplication?.interests || "Contributor at Urban Stories.", ...(email ? { email } : {}), clerkUserId: access.userId });
     if (data.featuredImage) {
       const asset = await client.fetch('*[_type=="sanity.imageAsset" && _id==$id][0]._id', { id: data.featuredImage.assetId });
       if (!asset) return NextResponse.json({ error: "The uploaded image could not be verified." }, { status: 400 });
     }
     const title = data.title || "Untitled draft";
     const slug = title.toLowerCase().normalize("NFKD").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 90);
-    const doc = await client.create({ _type: "article", title, slug: { _type: "slug", current: `${slug}-${Date.now().toString(36)}` }, excerpt: data.excerpt, ...(data.featuredImage ? { featuredImage: { _type: "image", asset: { _type: "reference", _ref: data.featuredImage.assetId }, alt: data.featuredImage.alt, caption: data.featuredImage.caption || "" } } : {}), ...(category ? { primaryCategory: { _type: "reference", _ref: category } } : {}), author: { _type: "reference", _ref: authorId }, body: data.body, contributorClerkUserId: access.userId, status: data.status, submissionStatus: data.status, ...(data.status === "pendingReview" ? { submittedAt: new Date().toISOString() } : {}), createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() });
+    const doc = await client.create({ _type: "article", title, slug: { _type: "slug", current: `${slug}-${Date.now().toString(36)}` }, excerpt: data.excerpt, ...(data.featuredImage ? { featuredImage: { _type: "image", asset: { _type: "reference", _ref: data.featuredImage.assetId }, alt: data.featuredImage.alt, caption: data.featuredImage.caption || "" } } : {}), ...(category ? { primaryCategory: { _type: "reference", _ref: category } } : {}), author: { _type: "reference", _ref: author._id }, body: data.body, contributorClerkUserId: access.userId, status: data.status, submissionStatus: data.status, ...(data.status === "pendingReview" ? { submittedAt: new Date().toISOString() } : {}), createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() });
     return NextResponse.json({ article: doc }, { status: 201 });
   } catch (error) { return apiError(error); }
 }
