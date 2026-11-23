@@ -9,7 +9,7 @@ export function SiteFooter({settings,footer}:{settings:any;footer:any}){
  return <>
   <section className="contributor-cta" aria-labelledby="contributor-cta-title">
    <div className={`blog-container contributor-cta-inner${contributorImage?" has-image":""}`}>
-    <div className="contributor-cta-copy"><h2 id="contributor-cta-title">Have a story worth sharing?</h2><p>Join the Urban Stories contributor community and share your perspective.</p><Link href="/contributor/apply" className="contributor-cta-button">Become a Contributor</Link></div>
+    <div className="contributor-cta-copy"><h2 id="contributor-cta-title">Have a story worth sharing?</h2><p>Join the Urban Stories contributor community and share your perspective.</p><Link href="/contributor/editor" className="contributor-cta-button">Become a Contributor</Link></div>
     {contributorImage&&<div className="contributor-cta-media"><img src={contributorImage} alt={footer?.contributorCtaImage?.alt||"A creative workspace for Urban Stories contributors"} loading="lazy"/></div>}
    </div>
   </section>
