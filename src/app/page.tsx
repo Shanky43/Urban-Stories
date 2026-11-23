@@ -17,6 +17,8 @@ export default async function HomePage(){
   copyrightText:"© 2026 Urban Stories. All rights reserved.",
   uiLabels:{home:"Home",search:"Search stories",readMore:"Read more",allStories:"All stories"}
  };
- const homeData:HomeData=home||{hero:{eyebrow:"Stories Beyond Boundaries",heading:"Ideas, people and places that move us.",description:"Discover fresh perspectives on technology, culture, creativity and the world around us.",searchPlaceholder:"What would you like to explore?",searchButtonLabel:"Search"},sections:[{_key:"latest-stories",title:"Latest Stories",sectionType:"latest",visible:true}]};
+ const defaultHome:HomeData={hero:{eyebrow:"Stories Beyond Boundaries",heading:"Ideas, people and places that move us.",description:"Discover fresh perspectives on technology, culture, creativity and the world around us.",searchPlaceholder:"What would you like to explore?",searchButtonLabel:"Search"},sections:[{_key:"latest-stories",title:"Latest Stories",sectionType:"latest",visible:true}]};
+ // A homepage document may exist before its sections are configured. Keep its CMS content and provide a latest-stories fallback.
+ const homeData:HomeData={...defaultHome,...(home||{}),hero:home?.hero||defaultHome.hero,sections:home?.sections?.length?home.sections:defaultHome.sections};
  return <BlogHome settings={siteSettings} navigation={navigation} footer={footer} home={homeData} categories={categories||[]} articles={articles||[]}/>;
 }
