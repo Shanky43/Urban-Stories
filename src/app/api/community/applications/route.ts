@@ -3,7 +3,7 @@ import { z } from "zod";
 import { getUserAccess } from "@/lib/auth/roles";
 import { getWriteClient } from "@/lib/sanity/write-client";
 import { apiError } from "@/lib/community/http";
-import { sendCommunityEmail } from "@/lib/email/community";
+import { sendCommunityEmail, sendUrbanStoriesEmail } from "@/lib/email/community";
 
 const schema = z.object({
   fullName: z.string().trim().min(2).max(100),
@@ -25,6 +25,7 @@ export async function POST(request: NextRequest) {
     if (existing) return NextResponse.json({ application: existing }, { status: 409 });
     const email = access.profile.emailAddresses.find((item) => item.id === access.profile.primaryEmailAddressId)?.emailAddress;
     const doc = await client.create({ _type: "contributorApplication", ...data, clerkUserId: access.userId, email, status: "pending", submittedAt: new Date().toISOString() });
+    if (email) await sendUrbanStoriesEmail({ to: email, template: "contributorApplicationReceived", data: { name: data.fullName, actionUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://urbanstories.vercel.app" }, idempotencyKey: "contributor-application-received-" + doc._id });
     const adminEmail = process.env.URBAN_STORIES_ADMIN_EMAIL;
     if (adminEmail) await sendCommunityEmail({ to: adminEmail, subject: "New Urban Stories contributor application", heading: "A new contributor application", message: `${data.fullName} has applied to contribute. Interests: ${data.interests.join(", ")}. Application reference: ${doc._id}.`, actionUrl: `${process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"}/admin`, actionLabel: "Review application" });
     return NextResponse.json({ application: { _id: doc._id, status: "pending" } }, { status: 201 });
