@@ -5,4 +5,5 @@ export type Article={_id:string;title:string;slug:string;excerpt:string;category
 export type SiteSettings={siteName?:string;tagline?:string;description?:string;defaultSeoTitle?:string;defaultSeoDescription?:string;contactEmail?:string;copyrightText?:string;logo?:SanityImage;favicon?:{asset?:{url?:string}};uiLabels?:Record<string,string>;defaultSocialImage?:SanityImage;socialLinks?:{label:string;url:string}[]};
 export type NavigationData={title?:string;items?:any[]};
 export type FooterData={description?:string;logo?:SanityImage;contributorCtaImage?:SanityImage;groups?:any[];socialLinks?:{label:string;url:string}[];newsletter?:any;copyrightText?:string};
-export type HomeData={hero?:{eyebrow?:string;heading?:string;description?:string;backgroundImage?:SanityImage;featuredArticle?:Article;searchPlaceholder?:string;searchButtonLabel?:string};sections?:any[]};
+export type HomeSection={_key:string;heading?:string;description?:string;sectionType?:string;visible?:boolean;limit?:number;category?:{slug?:string};articles?:Article[];promoImage?:SanityImage;promoLink?:{label?:string;path?:string;url?:string}};
+export type HomeData={hero?:{eyebrow?:string;heading?:string;description?:string;backgroundImage?:SanityImage;featuredArticle?:Article;searchPlaceholder?:string;searchButtonLabel?:string};sections?:HomeSection[]};

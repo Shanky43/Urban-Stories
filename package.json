@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "sanity:schema:deploy": "sanity schemas deploy --workspace urban-stories",
+    "sanity:seed:about": "node scripts/seed-about-page.mjs"
   },
   "dependencies": {
     "@clerk/nextjs": "^7.10.7",
