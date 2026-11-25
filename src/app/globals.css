@@ -771,3 +771,8 @@
   .blogs-page-header { padding-top: 2.5rem; }
   .latest-stories-action { margin-top: 1.75rem; }
 }
+
+/* High-contrast footer wordmark for the navy footer. */
+.site-footer .footer-brand-logo{display:inline-flex;align-items:center;padding:6px 0;background:transparent;border-radius:0;text-decoration:none}
+.site-footer .footer-brand-wordmark{display:inline-block;color:#fff;font-size:27px;font-weight:800;letter-spacing:-1.2px;line-height:1.1}
+.site-footer .footer-brand-wordmark span{color:#397cf0}

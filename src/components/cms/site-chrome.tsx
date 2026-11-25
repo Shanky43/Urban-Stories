@@ -29,7 +29,7 @@ export function SiteFooter({ settings, footer }: { settings: any; footer: any })
   ];
   return <>
     <section className="contributor-cta" aria-labelledby="contributor-cta-title"
-      style={contributorImage ? { backgroundImage: "linear-gradient(105deg,rgba(255,255,255,.91),rgba(239,246,255,.82)),url(" + contributorImage + ")" } : undefined}>
+      style={contributorImage ? { backgroundImage: "linear-gradient(105deg,rgba(255,255,255,.42),rgba(239,246,255,.30)),url(" + contributorImage + ")" } : undefined}>
       <div className="blog-container contributor-cta-inner">
         <div className="contributor-cta-copy">
           <h2 id="contributor-cta-title">Have a story worth sharing?</h2>
@@ -42,7 +42,7 @@ export function SiteFooter({ settings, footer }: { settings: any; footer: any })
       <div className="blog-container site-footer-grid">
         <div className="site-footer-brand">
           <Link href="/" className="brand-logo footer-brand-logo" aria-label="Urban Stories – Go to homepage">
-            <Image src="/branding/urban-stories-logo.svg" alt="Urban Stories" width={205} height={45} />
+            <span className="footer-brand-wordmark" aria-label="Urban Stories">Urban <span>Stories</span></span>
           </Link>
           <p>Stories beyond boundaries. Perspectives for curious minds.</p>
         </div>
